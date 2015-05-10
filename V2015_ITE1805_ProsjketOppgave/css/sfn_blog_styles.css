@@ -1,0 +1,163 @@
+@CHARSET "ISO-8859-1";
+
+.btn-link-no-underline, .btn-link-no-underline:hover,
+	.btn-link-no-underline:visited, .btn-link-no-underline:active {
+	text-decoration: none;
+}
+
+.link-no-underline:visited, .link-no-underline:active {
+	color: #777;
+}
+
+.link-no-underline:hover {
+	color: #000 !important;
+}
+
+.link-no-underline, .link-no-underline:hover, .link-no-underline:visited,
+	.link-no-underline:active {
+	text-decoration: none;
+}
+
+.margin-xs {
+	margin: 5px;
+}
+
+.margin-sm {
+	margin: 15px;
+}
+
+.margin-md {
+	margin: 30px;
+}
+
+.margin-lg {
+	margin: 45px;
+}
+
+.margin-top-xs {
+	margin-top: 5px;
+}
+
+.margin-top-sm {
+	margin-top: 15px;
+}
+
+.margin-top-md {
+	margin-top: 30px;
+}
+
+.margin-top-lg {
+	margin-top: 45px;
+}
+
+.margin-bottom-xs {
+	margin-bottom: 5px;
+}
+
+.margin-bottom-sm {
+	margin-bottom: 15px;
+}
+
+.margin-bottom-md {
+	margin-bottom: 30px;
+}
+
+.margin-bottom-lg {
+	margin-bottom: 45px;
+}
+
+.margin-left-xs {
+	margin-left: 5px;
+}
+
+.margin-left-sm {
+	margin-left: 15px;
+}
+
+.margin-left-md {
+	margin-left: 30px;
+}
+
+.margin-left-lg {
+	margin-left: 45px;
+}
+
+.margin-right-xs {
+	margin-right: 5px;
+}
+
+.margin-right-sm {
+	margin-right: 15px;
+}
+
+.margin-right-md {
+	margin-right: 30px;
+}
+
+.margin-right-lg {
+	margin-right: 45px;
+}
+
+.padding-top-xs {
+	padding-top: 5px;
+}
+
+.padding-top-sm {
+	padding-top: 15px;
+}
+
+.padding-top-md {
+	padding-top: 30px;
+}
+
+.padding-top-lg {
+	padding-top: 45px;
+}
+
+.padding-bottom-xs {
+	padding-bottom: 5px;
+}
+
+.padding-bottom-sm {
+	padding-bottom: 15px;
+}
+
+.padding-bottom-md {
+	padding-bottom: 30px;
+}
+
+.padding-bottom-lg {
+	padding-bottom: 45px;
+}
+
+.padding-left-xs {
+	padding-left: 5px;
+}
+
+.padding-left-sm {
+	padding-left: 15px;
+}
+
+.padding-left-md {
+	padding-left: 30px;
+}
+
+.padding-left-lg {
+	padding-left: 45px;
+}
+
+.padding-right-xs {
+	padding-right: 5px;
+}
+
+.padding-right-sm {
+	padding-right: 15px;
+}
+
+.padding-right-md {
+	padding-right: 30px;
+}
+
+.padding-right-lg {
+	padding-right: 45px;
+}

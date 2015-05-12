@@ -1,32 +1,33 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-22 15:56:17
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-12 21:04:14
          compiled from ".\templates\header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:277835537a414b225b3-66101330%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:89175551aaefd45183-12153150%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    'f04a7dfe95e498292b875571aee0477948efac78' => 
+    '9f6f0c58e9bf6bc3618e0997365df721f7c97638' => 
     array (
       0 => '.\\templates\\header.tpl',
-      1 => 1429710973,
+      1 => 1431457389,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '277835537a414b225b3-66101330',
+  'nocache_hash' => '89175551aaefd45183-12153150',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_5537a414b45847_21371817',
+  'unifunc' => 'content_5551aaefd7fde4_84241294',
   'variables' => 
   array (
     'websiteTitle' => 0,
     'pageTitle' => 0,
     'links_cssClasses' => 0,
     'user' => 0,
+    'isadmin' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5537a414b45847_21371817')) {function content_5537a414b45847_21371817($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php if ($_valid && !is_callable('content_5551aaefd7fde4_84241294')) {function content_5551aaefd7fde4_84241294($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <HTML xmlns="http://www.w3.org/1999/xhtml">
 <HEAD>
     <TITLE><?php echo (($tmp = @$_smarty_tpl->tpl_vars['websiteTitle']->value)===null||$tmp==='' ? "Website" : $tmp);?>
@@ -56,7 +57,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	      </button>
 	      <a class="navbar-brand" href="index.php">
 			<i class="fa fa-cubes fa-lg text-danger"></i>
-			<span class="text-danger">SFN Blogg</span>
+			<span class="text-danger">HiN Blogg</span>
 		  </a>
 	    </div>
 	
@@ -65,13 +66,17 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	      <ul class="nav navbar-nav">
 	        <li class="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['links_cssClasses']->value[0]['cssClass'])===null||$tmp==='' ? '' : $tmp);?>
 ">
-	        	<a href="index.php"><i class="fa fa-home fa-lg"></i> Hjem <span class="sr-only">Hjem</span></a>
+	        	<a href="index.php"><i class="fa fa-home fa-lg fa-fw"></i> Hjem <span class="sr-only">Hjem</span></a>
         	</li>
-			<?php if (isset($_smarty_tpl->tpl_vars['user']->value)&&$_smarty_tpl->tpl_vars['user']->value->getId()>0) {?>			
-			<li class="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['links_cssClasses']->value[1]['cssClass'])===null||$tmp==='' ? '' : $tmp);?>
+			<?php if (isset($_smarty_tpl->tpl_vars['user']->value)&&$_smarty_tpl->tpl_vars['user']->value->getId()>0&&isset($_smarty_tpl->tpl_vars['isadmin']->value)&&$_smarty_tpl->tpl_vars['isadmin']->value==true) {?>			
+				<li class="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['links_cssClasses']->value[1]['cssClass'])===null||$tmp==='' ? '' : $tmp);?>
 ">
-	        	<a href="addeditpost.php"><i class="fa fa-pencil-square-o fa-lg"></i> Ny blogg post <span class="sr-only">Ny blogg post</span></a>
-        	</li>
+					<a href="addeditpost.php"><i class="fa fa-file-text-o fa-lg fa-fw"></i> Ny blogg post <span class="sr-only">Ny blogg post</span></a>
+				</li>
+				<li class="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['links_cssClasses']->value[2]['cssClass'])===null||$tmp==='' ? '' : $tmp);?>
+">
+					<a href="manageresources.php"><i class="fa fa-cogs fa-lg fa-fw"></i> Administrasjon <span class="sr-only">Administrasjon</span></a>
+				</li>
 			<?php }?>
 	      </ul>
 		  
@@ -84,7 +89,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 		  
 		  <ul class="nav navbar-nav navbar-right">
 			<?php if (isset($_smarty_tpl->tpl_vars['user']->value)&&$_smarty_tpl->tpl_vars['user']->value->getId()>0) {?>
-			<form enctype="multipart/form-data" method="post" >
+			<form enctype="multipart/form-data" method="POST" >
 				<li class="margin-top-xs">
 					<span>Pålogget som <strong><?php echo $_smarty_tpl->tpl_vars['user']->value->getFullName();?>
 </strong></span>

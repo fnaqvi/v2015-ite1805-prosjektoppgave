@@ -11,13 +11,37 @@
 	<div class="col-sm-10 col-xs-12">
 		{if isset($blogposts)}
 			{foreach $blogposts as $blogpost}
-				<div id="panel_{$blogpost->getId()}" class="panel panel-default margin-left-sm margin-right-sm">
+				<div id="panel_{$blogpost->getId()}" class="panel panel-primary margin-left-sm margin-right-sm">
 				  <div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-8">
-							<h3 class="panel-title">{$blogpost->getTitle()}</h3>
+							<h3 class="panel-title">
+								<a href="post.php?postid={$blogpost->getId()}">{$blogpost->getTitle()}</a>
+								<span class="badge">{$blogpost->getReadCounter()}</span>								
+							</h3>
 						</div>
 						<div class="col-xs-4 text-right">
+							<i class="fa fa-user fa-fw" title="{$blogpost->getCreatedByName()}" data-toggle="tooltip" data-placement="body"></i>
+							<span class="margin-right-xs hidden-xs1">{$blogpost->getCreatedByName()}</span>
+							<i class="fa fa-calendar fa-fw" title='{$blogpost->getCreatedOn()|date_format:"%d.%m.%Y %H:%M"}' data-toggle="tooltip" data-placement="body"></i>
+							<span class="margin-right-sm">{$blogpost->getCreatedOn()|date_format:"%d.%m.%Y"}</span>
+						</div>
+					</div>
+				  </div>
+				  <div class="panel-body">
+					<div class="blog-post-div-shortened margin-bottom-xs">
+						{$blogpost->getText()}
+					</div>
+					<div class="pull-right">
+						<a href="post.php?postid={$blogpost->getId()}">Les hele innlegg</a>
+					</div>
+				  </div>
+				  <div class="panel-footer">
+					<div class="row">
+						<div class="col-xs-6">
+								
+						</div>
+						<div class="col-xs-6 text-right">
 							{if isset($user) && $user->getId() gt 0 && isset($isadmin) && $isadmin == true}	
 								<a href="addeditpost.php?postid={$blogpost->getId()}" class="link-no-underline" title="Rediger" data-toggle="tooltip" data-placement="body">
 									<i class="fa fa-pencil fa-lg fa-fw"></i>
@@ -27,18 +51,9 @@
 									<i class="fa fa-times fa-lg fa-fw"></i>
 									<span class="hidden-xs">Slett</span>
 								</a>
-							{/if}
+							{/if}				
 						</div>
-					</div>
-				  </div>
-				  <div class="panel-body">
-					{$blogpost->getText()}
-				  </div>
-				  <div class="panel-footer text-right">
-					<i class="fa fa-user fa-lg fa-fw" title="{$blogpost->getCreatedByName()}" data-toggle="tooltip" data-placement="body"></i>
-					<span class="margin-right-xs hidden-xs1">{$blogpost->getCreatedByName()}</span>
-					<i class="fa fa-calendar fa-lg fa-fw" title='{$blogpost->getCreatedOn()|date_format:"%d.%m.%Y %H:%M"}' data-toggle="tooltip" data-placement="body"></i>
-					<span class="margin-right-sm">{$blogpost->getCreatedOn()|date_format:"%d.%m.%Y %H:%M"}</span>					
+					</div>					
 				  </div>
 				 </div>				
 			{/foreach}

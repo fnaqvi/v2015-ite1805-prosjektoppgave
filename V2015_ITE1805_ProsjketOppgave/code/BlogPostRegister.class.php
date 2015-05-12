@@ -10,8 +10,8 @@ class BlogPostRegister {
 			
 			if ($post->getId () <= 0) {
 				
-				$stmt = $this->db->prepare ( "INSERT INTO BlogPost(Title, Text, CreatedById, CreatedByIP, CreatedOn, UpdatedById, UpdatedByIP, UpdatedOn)
-								VALUES (:title, :text, :creatorid, :creatorip, now(), :updaterid, :updaterip, now())" );
+				$stmt = $this->db->prepare ( "INSERT INTO BlogPost(Title, Text, CreatedById, CreatedByIP, CreatedOn, UpdatedById, UpdatedByIP, UpdatedOn, ReadCounter)
+								VALUES (:title, :text, :creatorid, :creatorip, now(), :updaterid, :updaterip, now(), 0)" );
 				
 				// $date = date ( 'Y-m-d H:i:s' );
 				$stmt->execute ( array (
@@ -64,7 +64,7 @@ class BlogPostRegister {
 			if ($posts = $stmt->fetchAll ( PDO::FETCH_CLASS, "BlogPost" )) {
 				return $posts;
 			} else {
-				print ( "Ingen rader fant!" );
+				print ("Ingen rader fant!") ;
 			}
 		} catch ( Exception $e ) {
 			// NotifyUser ( "En feil oppstod", $e - getMessage () );
@@ -88,11 +88,19 @@ class BlogPostRegister {
 		} finally{
 		}
 	}
-	function getPost($id) {
+	function getPost($id, $updateReadCounter) {
 		try {
 			$id = htmlspecialchars ( $id );
 			
 			if ($id != null && $id != '') {
+				if ($updateReadCounter == true) {
+					$stmt = $this->db->prepare ( "UPDATE BlogPost 
+													SET ReadCounter = ReadCounter + 1											
+													WHERE Id= :id " );
+					$stmt->execute ( array (
+							':id' => $id 
+					) );
+				}
 				
 				$stmt = $this->db->prepare ( "SELECT bp.*,
 												 CONCAT_WS(' ', bu1.FirstName, bu1.LastName) AS CreatedByName,

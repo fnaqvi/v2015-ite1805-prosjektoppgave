@@ -85,7 +85,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 		  
 		  <ul class="nav navbar-nav navbar-right">
 			<?php if (isset($_smarty_tpl->tpl_vars['user']->value)&&$_smarty_tpl->tpl_vars['user']->value->getId()>0) {?>
-			<form enctype="multipart/form-data" method="POST" >
+			<form enctype="multipart/form-data" method="post" >
 				<li class="margin-top-xs">
 					<span>Pålogget som <strong><?php echo $_smarty_tpl->tpl_vars['user']->value->getFullName();?>
 </strong></span>

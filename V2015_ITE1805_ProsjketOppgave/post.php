@@ -3,20 +3,21 @@ header ( 'Content-Type: text/html; charset=utf-8' );
 require_once ('code/auth_pdo.php');
 require_once ('code/BlogUserRegister.class.php');
 require_once ('code/BlogPostRegister.class.php');
+require_once ('code/BlogCommentRegister.class.php');
 include ('libs/Smarty.class.php'); // create object
 
 session_start ();
 
 $smarty = new Smarty (); // assign options arrays
 $smarty->assign ( 'websiteTitle', 'HiN Blogg' );
-$smarty->assign ( 'pageTitle', 'Hjem' );
+$smarty->assign ( 'pageTitle', 'Post' );
 $smarty->assign ( 'modalRegisterTitle', 'Registrering som ny bruker' );
 $smarty->assign ( 'modalLoginTitle', 'Logg inn' );
 
 $smarty->assign ( "links_cssClasses", array (
 		array (
 				"link" => "home",
-				"cssClass" => "active" 
+				"cssClass" => "" 
 		),
 		array (
 				"link" => "addeditpost",
@@ -26,10 +27,10 @@ $smarty->assign ( "links_cssClasses", array (
 
 $blogUserRegister = new BlogUserRegister ( $db );
 $blogPostRegister = new BlogPostRegister ( $db );
+$blogCommentRegister = new BlogCommentRegister ( $db );
 
 if (isset ( $_POST ['submit'] )) {
-	
-	if ($_POST ['submit'] == 'register') {
+if ($_POST ['submit'] == 'register') {
 		
 		$newUser = new BlogUser ();
 		$newUser->populate ( htmlspecialchars ( $_POST ['userid'] ), htmlspecialchars ( $_POST ['password'] ), htmlspecialchars ( $_POST ['fornavn'] ), htmlspecialchars ( $_POST ['etternavn'] ), htmlspecialchars ( $_POST ['epost'] ), htmlspecialchars ( $_POST ['telefon'] ), htmlspecialchars ( $_POST ['mobil'] ), htmlspecialchars ( $_POST ['www'] ) );
@@ -91,13 +92,58 @@ if (isset ( $_POST ['submit'] )) {
 		$_SESSION ['userauthentication'] = 'anonymous';
 		
 		$smarty->assign ( 'user', null );
-	} else if ($_POST ['submit'] == 'savepost') {
+	} else if ($_POST ['submit'] == 'savecomment') {
 		
-		$newPost = new BlogPost ();
-		$newPost->populate ( htmlspecialchars ( $_POST ['postid'] ), htmlspecialchars ( $_POST ['title'] ), htmlspecialchars ( $_POST ['posttext'] ), htmlspecialchars ( $_POST ['createdbyid'] ), '', htmlspecialchars ( $_POST ['createdbyip'] ), '', htmlspecialchars ( $_POST ['updatedbyid'] ), '', htmlspecialchars ( $_POST ['updatedbyip'] ), '' );
-		$newPostId = $blogPostRegister->savePost ( $newPost );
+		$newComment = new BlogComment ();
+		$newComment->populate ( -1, htmlspecialchars ( $_POST ['postid'] ), htmlspecialchars ( $_POST ['commenttext'] ), htmlspecialchars ( $_POST ['createdbyid'] ), '', htmlspecialchars ( $_POST ['createdbyip'] ), '', htmlspecialchars ( $_POST ['updatedbyid'] ), '', htmlspecialchars ( $_POST ['updatedbyip'] ), '' );
+		$newCommentId = $blogCommentRegister->saveComment( $newComment );
 	}
 }
+
+if (isset ( $_GET ['postid'] ) && $_GET ['postid'] > 0) {
+
+	$postId = $_GET ['postid'];
+	// echo ($postId);
+
+	$blogPost = $blogPostRegister->getPost ( $postId, true );
+
+	$smarty->assign ( 'pageTitle', $blogPost->getTitle () );
+	$smarty->assign ( 'blogpost', $blogPost );
+
+	$postComments = array ();
+	$postComments = $blogCommentRegister->getAllCommentsForPost ( $postId );
+
+	$smarty->assign ( 'postcomments', $postComments );
+
+} else {
+	header ( "Location: index.php" );
+	die ();
+}
+
+if (isset ( $_SESSION ['userauthentication'] ) && $_SESSION ['userauthentication'] == 'authenticated' && isset ( $_SESSION ['userid'] ) && $_SESSION ['userid'] != '') {
+	$user = $blogUserRegister->getUserById ( $_SESSION ['userid'] );
+	if ($user != null) {
+		$_SESSION ['username'] = $user->getFullName ();
+		$_SESSION ['isadmin'] = $blogUserRegister->hasUserAdminRole ( $user->getId () );
+		
+		$smarty->assign ( 'user', $user );
+		$smarty->assign ( 'isadmin', $_SESSION ['isadmin'] );
+		
+		$newComment = new BlogComment();
+		$newComment->populate ( -1, $postId, '', $user->getId (), $user->getFullName (), $_SERVER ['REMOTE_ADDR'], '', $user->getId (), $user->getFullName (), $_SERVER ['REMOTE_ADDR'], '' );
+		$smarty->assign ( 'newcomment', $newComment );
+	} else {
+		session_unset ();
+		$_SESSION ['userauthentication'] = 'anonymous';
+		$smarty->assign ( 'user', null );
+		$smarty->assign ( 'newcomment', null);
+	}
+} else {
+	session_unset ();
+	$_SESSION ['userauthentication'] = 'anonymous';
+	$smarty->assign ( 'user', null );
+}
+
 
 // Taken from http://stackoverflow.com/questions/520237/how-do-i-expire-a-php-session-after-30-minutes/1270960#1270960
 if (isset ( $_SESSION ['LAST_ACTIVITY'] ) && (time () - $_SESSION ['LAST_ACTIVITY'] > 1800)) {
@@ -116,7 +162,6 @@ if (isset ( $_SESSION ['userauthentication'] ) && $_SESSION ['userauthentication
 		
 		$smarty->assign ( 'user', $user );
 		$smarty->assign ( 'isadmin', $_SESSION ['isadmin'] );
-		
 	} else {
 		session_unset ();
 		$_SESSION ['userauthentication'] = 'anonymous';
@@ -129,10 +174,9 @@ if (isset ( $_SESSION ['userauthentication'] ) && $_SESSION ['userauthentication
 }
 
 $blogposts = array ();
-
 $blogposts = $blogPostRegister->getAllPosts ();
 
 $smarty->assign ( 'blogposts', $blogposts );
 
-$smarty->display ( 'index.tpl' );
+$smarty->display ( 'post.tpl' );
 ?>

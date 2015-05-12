@@ -161,3 +161,12 @@
 .padding-right-lg {
 	padding-right: 45px;
 }
+
+.blog-post-div-shortened
+{
+	width: 100%;
+	max-height: 100px;
+	display:block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

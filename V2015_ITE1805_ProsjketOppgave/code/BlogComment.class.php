@@ -1,8 +1,8 @@
 <?php
-class BlogPost {
+class BlogComment {
 	private $Id;
-	private $Title;
-	private $Text;
+	private $PostId;
+	private $CommentText;
 	private $CreatedById;
 	private $CreatedByName;
 	private $CreatedByIP;
@@ -11,13 +11,13 @@ class BlogPost {
 	private $UpdatedByName;
 	private $UpdatedByIP;
 	private $UpdatedOn;
-	private $ReadCounter;
+	private $Status;
 	function __construct() {
 	}
-	function populate($id = '', $title = '', $text = '', $creatorid = '', $creatorname = '', $creatorip = '', $createddate = '', $updaterid = '', $updatername = '', $updaterip = '', $updateddate = '') {
+	function populate($id = '', $postId = '', $commentText = '', $creatorid = '', $creatorname = '', $creatorip = '', $createddate = '', $updaterid = '', $updatername = '', $updaterip = '', $updateddate = '', $status = 'waitingapproval') {
 		$this->Id = htmlspecialchars ( $id );
-		$this->Title = htmlspecialchars ( $title );
-		$this->Text = htmlspecialchars ( $text );
+		$this->PostId = htmlspecialchars ( $postId );
+		$this->CommentText = htmlspecialchars ( $commentText );
 		
 		$this->CreatedById = htmlspecialchars ( $creatorid );
 		$this->CreatedByName = htmlspecialchars ( $creatorname );
@@ -28,15 +28,17 @@ class BlogPost {
 		$this->UpdatedByName = htmlspecialchars ( $updatername );
 		$this->UpdatedByIP = htmlspecialchars ( $updaterip );
 		$this->UpdatedOn = htmlspecialchars ( $updateddate );
+		
+		$this->Status = htmlspecialchars ( $status );
 	}
 	function getId() {
 		return $this->Id;
 	}
-	function getTitle() {
-		return html_entity_decode($this->Title);
+	function getPostId() {
+		return $this->PostId;
 	}
-	function getText() {
-		return html_entity_decode($this->Text);
+	function getCommentText() {
+		return $this->CommentText;
 	}
 	function getCreatedById() {
 		return $this->CreatedById;
@@ -62,8 +64,8 @@ class BlogPost {
 	function getUpdatedOn() {
 		return $this->UpdatedOn;
 	}
-	function getReadCounter() {
-		return $this->ReadCounter;
+	function getStatus() {
+		return $this->Status;
 	}
 }
 ?>

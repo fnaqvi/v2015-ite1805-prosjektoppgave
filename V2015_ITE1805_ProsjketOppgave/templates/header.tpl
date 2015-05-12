@@ -26,7 +26,7 @@
 	      </button>
 	      <a class="navbar-brand" href="index.php">
 			<i class="fa fa-cubes fa-lg text-danger"></i>
-			<span class="text-danger">SFN Blogg</span>
+			<span class="text-danger">HiN Blogg</span>
 		  </a>
 	    </div>
 	
@@ -37,9 +37,12 @@
 	        	<a href="index.php"><i class="fa fa-home fa-lg fa-fw"></i> Hjem <span class="sr-only">Hjem</span></a>
         	</li>
 			{if isset($user) && $user->getId() gt 0 && isset($isadmin) && $isadmin == true}			
-			<li class="{$links_cssClasses[1].cssClass|default:""}">
-	        	<a href="addeditpost.php"><i class="fa fa-file-text-o fa-lg fa-fw"></i> Ny blogg post <span class="sr-only">Ny blogg post</span></a>
-        	</li>
+				<li class="{$links_cssClasses[1].cssClass|default:""}">
+					<a href="addeditpost.php"><i class="fa fa-file-text-o fa-lg fa-fw"></i> Ny blogg post <span class="sr-only">Ny blogg post</span></a>
+				</li>
+				<li class="{$links_cssClasses[2].cssClass|default:""}">
+					<a href="manageresources.php"><i class="fa fa-cogs fa-lg fa-fw"></i> Administrasjon <span class="sr-only">Administrasjon</span></a>
+				</li>
 			{/if}
 	      </ul>
 		  

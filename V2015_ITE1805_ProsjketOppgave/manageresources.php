@@ -82,9 +82,19 @@ $smarty->assign ( "links_cssClasses", array (
 		),
 		array (
 				"link" => "addeditpost",
+				"cssClass" => "" 
+		),
+		array (
+				"link" => "manageresources",
 				"cssClass" => "active" 
 		) 
 ) );
 
-$smarty->display ( 'addeditpost.tpl' );
+$blogposts = array ();
+
+$blogposts = $blogPostRegister->getAllPosts ();
+
+$smarty->assign ( 'blogposts', $blogposts );
+
+$smarty->display ( 'manageresources.tpl' );
 ?>
